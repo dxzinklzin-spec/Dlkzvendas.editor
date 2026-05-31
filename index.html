@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dlkz77cc Editz - App Pro Max</title>
+
+<style>
+body{
+margin:0;
+font-family:Arial;
+background:#0b0b0b;
+color:white;
+}
+
+.screen{display:none; padding:15px;}
+.active{display:block;}
+
+@keyframes fade{
+from{opacity:0; transform:translateY(10px);}
+to{opacity:1; transform:translateY(0);}
+}
+
+/* LOGIN */
+.login{
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
+
+.box{
+background:#1c1c1c;
+padding:20px;
+border-radius:12px;
+width:280px;
+text-align:center;
+}
+
+input,textarea{
+width:100%;
+padding:10px;
+margin-top:10px;
+border:none;
+border-radius:8px;
+background:#2a2a2a;
+color:white;
+}
+
+button{
+width:100%;
+padding:10px;
+margin-top:10px;
+border:none;
+border-radius:8px;
+background:#00ffcc;
+font-weight:bold;
+cursor:pointer;
+}
+
+button:hover{opacity:0.8;}
+
+.card{
+background:#1c1c1c;
+padding:15px;
+margin-top:15px;
+border-radius:10px;
+animation:fade 0.4s ease-in;
+}
+
+.top{
+display:flex;
+justify-content:space-between;
+padding:10px;
+background:#111;
+position:sticky;
+top:0;
+}
+
+.bottom{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+display:flex;
+background:#111;
+}
+
+.tab{
+flex:1;
+padding:12px;
+text-align:center;
+cursor:pointer;
+}
+
+.tab:hover{background:#222;}
+
+.item{
+background:#111;
+padding:10px;
+margin-top:10px;
+border-radius:8px;
+}
+
+.green{color:#00ffcc;}
+.yellow{color:#ffcc00;}
+.red{color:#ff4d4d;}
+
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<div id="login" class="login">
+<div class="box">
+<h2>LOGIN</h2>
+<input id="user" placeholder="Usuário">
+<input id="pass" type="password" placeholder="Senha">
+<button onclick="login()">Entrar</button>
+</div>
+</div>
+
+<!-- APP -->
+<div id="app" class="screen">
+
+<!-- TOPO -->
+<div class="top">
+<div>Dlkz77cc App</div>
+<div class="yellow">👥 <span id="visitas">0</span></div>
+</div>
+
+<!-- HOME -->
+<div id="home" class="page">
+
+<div class="card">
+<h3>📊 Ganhos totais</h3>
+<div class="green">R$ <span id="total">0</span></div>
+<input id="valor" type="number" placeholder="Adicionar pagamento">
+<button onclick="addValor()">Adicionar</button>
+</div>
+
+<div class="card">
+<h3>📦 Stats</h3>
+<p>Pedidos: <span id="pedidos">0</span></p>
+<p>Clientes: <span id="clientes">0</span></p>
+</div>
+
+</div>
+
+<!-- PEDIDOS -->
+<div id="pedidosPage" class="page" style="display:none">
+
+<div class="card">
+<h3>Novo Pedido</h3>
+<input id="nome" placeholder="Nome">
+<input id="idade" placeholder="Idade">
+<input id="tel" placeholder="Telefone">
+<textarea id="desc" placeholder="Descrição"></textarea>
+
+<button onclick="zap()">WhatsApp</button>
+<button onclick="addPedido()">Salvar pedido</button>
+</div>
+
+<div id="listaPedidos"></div>
+
+</div>
+
+<!-- FEEDBACK -->
+<div id="feedPage" class="page" style="display:none">
+
+<div class="card">
+<h3>Feedback</h3>
+<input id="nota" placeholder="Nota 0-10">
+<input id="coment" placeholder="Comentário">
+<button onclick="feedback()">Enviar</button>
+</div>
+
+<div id="listaFeed"></div>
+
+</div>
+
+<!-- BOTTOM MENU -->
+<div class="bottom">
+<div class="tab" onclick="show('home')">Home</div>
+<div class="tab" onclick="show('pedidosPage')">Pedidos</div>
+<div class="tab" onclick="show('feedPage')">Feedback</div>
+</div>
+
+</div>
+
+<script>
+
+let total = 0;
+
+/* LOGIN */
+function login(){
+let u = user.value;
+let p = pass.value;
+if(u && p){
+login.style.display="none";
+app.classList.add("active");
+}
+}
+
+/* VISITAS */
+let v = localStorage.getItem("visitasApp");
+v = v ? Number(v)+1 : 1;
+localStorage.setItem("visitasApp", v);
+visitas.innerText = v;
+
+/* SHOW PAGE */
+function show(page){
+home.style.display="none";
+pedidosPage.style.display="none";
+feedPage.style.display="none";
+
+document.getElementById(page).style.display="block";
+}
+
+/* GANHOS */
+function addValor(){
+let val = Number(valor.value);
+if(!val) return;
+
+total += val;
+totalEl().innerText = total;
+valor.value="";
+}
+
+function totalEl(){return document.getElementById("total");}
+
+/* PEDIDOS */
+let pedidosCount = 0;
+let clientesSet = new Set(JSON.parse(localStorage.getItem("clientes")||"[]"));
+
+function addPedido(){
+let n = nome.value;
+let i = idade.value;
+let t = tel.value;
+let d = desc.value;
+
+let div = document.createElement("div");
+div.className="item";
+div.innerHTML=`
+<b>${n}</b><br>
+${d}<br>
+<span class="yellow">Em andamento</span>
+`;
+
+listaPedidos.appendChild(div);
+
+pedidosCount++;
+pedidos.innerText = pedidosCount;
+
+clientesSet.add(n);
+localStorage.setItem("clientes", JSON.stringify([...clientesSet]));
+
+clientes.innerText = clientesSet.size;
+}
+
+/* WHATSAPP */
+function zap(){
+let msg = `Pedido:%0A${nome.value}%0A${idade.value}%0A${tel.value}%0A${desc.value}`;
+window.open("https://wa.me/5511951319587?text="+msg);
+}
+
+/* FEEDBACK */
+function feedback(){
+let div = document.createElement("div");
+div.className="item";
+div.innerHTML=`⭐ ${nota.value}/10 - ${coment.value}`;
+listaFeed.appendChild(div);
+
+nota.value="";
+coment.value="";
+}
+
+</script>
+
+</body>
+</html>
