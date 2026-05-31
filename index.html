@@ -3,279 +3,247 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dlkz77cc Editz - App Pro Max</title>
+<title>Dlkz77cc Editz - Sistema Profissional</title>
 
 <style>
 body{
 margin:0;
 font-family:Arial;
-background:#0b0b0b;
+background:#0f0f0f;
 color:white;
 }
 
-.screen{display:none; padding:15px;}
-.active{display:block;}
-
-@keyframes fade{
-from{opacity:0; transform:translateY(10px);}
-to{opacity:1; transform:translateY(0);}
-}
-
-/* LOGIN */
-.login{
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
-}
-
-.box{
-background:#1c1c1c;
-padding:20px;
-border-radius:12px;
-width:280px;
+header{
 text-align:center;
+padding:40px;
+background:#111;
 }
 
-input,textarea{
+section{
+margin:20px;
+padding:20px;
+background:#1a1a1a;
+border-radius:12px;
+opacity:0;
+transform:translateY(20px);
+transition:0.7s;
+}
+
+.show{opacity:1;transform:translateY(0);}
+
+h1,h2{color:#00ff99}
+
+input,select{
 width:100%;
 padding:10px;
-margin-top:10px;
+margin-top:5px;
 border:none;
 border-radius:8px;
-background:#2a2a2a;
-color:white;
 }
 
 button{
 width:100%;
 padding:10px;
 margin-top:10px;
+background:#00ff99;
 border:none;
-border-radius:8px;
-background:#00ffcc;
 font-weight:bold;
 cursor:pointer;
 }
 
-button:hover{opacity:0.8;}
+button:hover{background:#00cc77}
+
+.zap{
+display:block;
+text-align:center;
+padding:10px;
+background:green;
+color:white;
+border-radius:8px;
+text-decoration:none;
+}
 
 .card{
-background:#1c1c1c;
-padding:15px;
-margin-top:15px;
-border-radius:10px;
-animation:fade 0.4s ease-in;
-}
-
-.top{
-display:flex;
-justify-content:space-between;
-padding:10px;
-background:#111;
-position:sticky;
-top:0;
-}
-
-.bottom{
-position:fixed;
-bottom:0;
-left:0;
-right:0;
-display:flex;
-background:#111;
-}
-
-.tab{
-flex:1;
-padding:12px;
-text-align:center;
-cursor:pointer;
-}
-
-.tab:hover{background:#222;}
-
-.item{
-background:#111;
+background:#222;
 padding:10px;
 margin-top:10px;
 border-radius:8px;
 }
 
-.green{color:#00ffcc;}
-.yellow{color:#ffcc00;}
-.red{color:#ff4d4d;}
-
+.del{
+background:red;
+color:white;
+margin-top:5px;
+}
+.small{
+font-size:14px;
+opacity:0.8;
+}
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN -->
-<div id="login" class="login">
-<div class="box">
-<h2>LOGIN</h2>
-<input id="user" placeholder="Usuário">
-<input id="pass" type="password" placeholder="Senha">
-<button onclick="login()">Entrar</button>
-</div>
-</div>
+<header class="fade">
+<h1>Dlkz77cc Editz</h1>
+<p>Sistema profissional de vendas, controle e organização</p>
+</header>
 
-<!-- APP -->
-<div id="app" class="screen">
+<section class="fade">
+<h2>👤 Sobre mim</h2>
+<p class="small">
+Sou editor profissional focado em conteúdo para YouTube e TikTok.
+Faço edições de anime, futebol, Roblox, Free Fire e fotos.
+Trabalho com cortes dinâmicos, impacto visual e estética moderna para aumentar engajamento.
+</p>
+</section>
 
-<!-- TOPO -->
-<div class="top">
-<div>Dlkz77cc App</div>
-<div class="yellow">👥 <span id="visitas">0</span></div>
-</div>
+<section class="fade">
+<h2>💰 Caixa total (ganhos)</h2>
+<h1 id="total">R$ 0</h1>
+</section>
 
-<!-- HOME -->
-<div id="home" class="page">
+<section class="fade">
+<h2>👀 Visitantes do site</h2>
+<h1 id="visitas">0</h1>
+</section>
 
-<div class="card">
-<h3>📊 Ganhos totais</h3>
-<div class="green">R$ <span id="total">0</span></div>
-<input id="valor" type="number" placeholder="Adicionar pagamento">
-<button onclick="addValor()">Adicionar</button>
-</div>
+<section class="fade">
+<h2>🧾 Criar pedido</h2>
 
-<div class="card">
-<h3>📦 Stats</h3>
-<p>Pedidos: <span id="pedidos">0</span></p>
-<p>Clientes: <span id="clientes">0</span></p>
-</div>
+<input id="nome" placeholder="Nome do cliente">
 
-</div>
+<select id="servico">
+<option value="7">Edição de Fotos - R$7</option>
+<option value="13">Roblox - R$13</option>
+<option value="15">Free Fire - R$15</option>
+<option value="23">Futebol - R$23</option>
+<option value="30">Anime - R$30</option>
+</select>
 
-<!-- PEDIDOS -->
-<div id="pedidosPage" class="page" style="display:none">
+<button onclick="addPedido()">Adicionar pagamento</button>
+</section>
 
-<div class="card">
-<h3>Novo Pedido</h3>
-<input id="nome" placeholder="Nome">
-<input id="idade" placeholder="Idade">
-<input id="tel" placeholder="Telefone">
-<textarea id="desc" placeholder="Descrição"></textarea>
+<section class="fade">
+<h2>📦 Lista de pedidos</h2>
+<div id="pedidos"></div>
+</section>
 
-<button onclick="zap()">WhatsApp</button>
-<button onclick="addPedido()">Salvar pedido</button>
-</div>
+<section class="fade">
+<h2>💬 Feedback dos clientes</h2>
 
-<div id="listaPedidos"></div>
+<input id="feedback" placeholder="Comentário do cliente">
+<input id="nota" type="number" min="1" max="5" placeholder="Nota 1-5">
 
-</div>
+<button onclick="addFeedback()">Enviar feedback</button>
 
-<!-- FEEDBACK -->
-<div id="feedPage" class="page" style="display:none">
+<div id="listaFeedback"></div>
+</section>
 
-<div class="card">
-<h3>Feedback</h3>
-<input id="nota" placeholder="Nota 0-10">
-<input id="coment" placeholder="Comentário">
-<button onclick="feedback()">Enviar</button>
-</div>
+<section class="fade">
+<h2>📞 WhatsApp direto</h2>
+<a class="zap" href="https://wa.me/5511951319587" target="_blank">
+Chamar no WhatsApp
+</a>
+</section>
 
-<div id="listaFeed"></div>
-
-</div>
-
-<!-- BOTTOM MENU -->
-<div class="bottom">
-<div class="tab" onclick="show('home')">Home</div>
-<div class="tab" onclick="show('pedidosPage')">Pedidos</div>
-<div class="tab" onclick="show('feedPage')">Feedback</div>
-</div>
-
-</div>
+<footer class="fade">
+<p class="small">© Dlkz77cc Editz - Sistema profissional online</p>
+</footer>
 
 <script>
+/* ================= VISITAS ================= */
+let visitas = localStorage.getItem("visitas") || 0;
+visitas++;
+localStorage.setItem("visitas", visitas);
+document.getElementById("visitas").innerText = visitas;
 
-let total = 0;
+/* ================= CAIXA ================= */
+let total = parseFloat(localStorage.getItem("total")) || 0;
+document.getElementById("total").innerText = "R$ " + total;
 
-/* LOGIN */
-function login(){
-let u = user.value;
-let p = pass.value;
-if(u && p){
-login.style.display="none";
-app.classList.add("active");
+/* ================= PEDIDOS ================= */
+let pedidos = JSON.parse(localStorage.getItem("pedidos") || "[]");
+
+function renderPedidos(){
+let html = "";
+
+pedidos.forEach((p,i)=>{
+html += `
+<div class="card">
+<b>${p.nome}</b><br>
+Valor: R$ ${p.valor}
+<button class="del" onclick="remover(${i})">Remover</button>
+</div>`;
+});
+
+document.getElementById("pedidos").innerHTML = html;
 }
-}
-
-/* VISITAS */
-let v = localStorage.getItem("visitasApp");
-v = v ? Number(v)+1 : 1;
-localStorage.setItem("visitasApp", v);
-visitas.innerText = v;
-
-/* SHOW PAGE */
-function show(page){
-home.style.display="none";
-pedidosPage.style.display="none";
-feedPage.style.display="none";
-
-document.getElementById(page).style.display="block";
-}
-
-/* GANHOS */
-function addValor(){
-let val = Number(valor.value);
-if(!val) return;
-
-total += val;
-totalEl().innerText = total;
-valor.value="";
-}
-
-function totalEl(){return document.getElementById("total");}
-
-/* PEDIDOS */
-let pedidosCount = 0;
-let clientesSet = new Set(JSON.parse(localStorage.getItem("clientes")||"[]"));
+renderPedidos();
 
 function addPedido(){
-let n = nome.value;
-let i = idade.value;
-let t = tel.value;
-let d = desc.value;
+let nome = document.getElementById("nome").value;
+let valor = parseFloat(document.getElementById("servico").value);
 
-let div = document.createElement("div");
-div.className="item";
-div.innerHTML=`
-<b>${n}</b><br>
-${d}<br>
-<span class="yellow">Em andamento</span>
-`;
+if(!nome) return alert("Digite o nome do cliente");
 
-listaPedidos.appendChild(div);
+pedidos.push({nome,valor});
+localStorage.setItem("pedidos",JSON.stringify(pedidos));
 
-pedidosCount++;
-pedidos.innerText = pedidosCount;
+total += valor;
+localStorage.setItem("total",total);
 
-clientesSet.add(n);
-localStorage.setItem("clientes", JSON.stringify([...clientesSet]));
+document.getElementById("total").innerText = "R$ " + total;
 
-clientes.innerText = clientesSet.size;
+renderPedidos();
 }
 
-/* WHATSAPP */
-function zap(){
-let msg = `Pedido:%0A${nome.value}%0A${idade.value}%0A${tel.value}%0A${desc.value}`;
-window.open("https://wa.me/5511951319587?text="+msg);
+function remover(i){
+total -= pedidos[i].valor;
+pedidos.splice(i,1);
+
+localStorage.setItem("pedidos",JSON.stringify(pedidos));
+localStorage.setItem("total",total);
+
+document.getElementById("total").innerText = "R$ " + total;
+
+renderPedidos();
 }
 
-/* FEEDBACK */
-function feedback(){
-let div = document.createElement("div");
-div.className="item";
-div.innerHTML=`⭐ ${nota.value}/10 - ${coment.value}`;
-listaFeed.appendChild(div);
+/* ================= FEEDBACK ================= */
+let feedbacks = JSON.parse(localStorage.getItem("feedbacks") || "[]");
 
-nota.value="";
-coment.value="";
+function addFeedback(){
+let texto = document.getElementById("feedback").value;
+let nota = document.getElementById("nota").value;
+
+if(!texto) return;
+
+feedbacks.push({texto,nota});
+localStorage.setItem("feedbacks",JSON.stringify(feedbacks));
+
+renderFeedback();
 }
 
+function renderFeedback(){
+let html = "";
+
+feedbacks.forEach(f=>{
+html += `<p>⭐ ${f.nota}/5 - ${f.texto}</p>`;
+});
+
+document.getElementById("listaFeedback").innerHTML = html;
+}
+renderFeedback();
+
+/* ================= ANIMAÇÃO ================= */
+const obs = new IntersectionObserver(entries=>{
+entries.forEach(e=>{
+if(e.isIntersecting)e.target.classList.add("show");
+});
+});
+
+document.querySelectorAll(".fade").forEach(el=>obs.observe(el));
 </script>
 
 </body>
